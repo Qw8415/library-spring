@@ -9,6 +9,7 @@ import pl.mezameru.library.repository.LoanRepository;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.List;
 
 @Service
 public class LoanService {
@@ -41,5 +42,9 @@ public class LoanService {
 
     public Loan findNotReturnedBook(Book book) {
         return loanRepository.findNotReturnedBook(book);
+    }
+
+    public List<Loan> findAllByUsername(String username) {
+        return loanRepository.findAllByUsername(username);
     }
 }
