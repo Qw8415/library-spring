@@ -3,7 +3,6 @@ package pl.mezameru.library.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -53,12 +52,14 @@ public class SearchController {
                          RedirectAttributes redirectAttributes) {
         Book book = bookService.findBookById(id);
         if (!book.isAvailable()) {
-            redirectAttributes.addAttribute("book", book);
+            Loan loan = loanService.findNotReturnedBook(book);
+            System.out.println(loan.getBook().toString());
+            redirectAttributes.addFlashAttribute("loan", loan);
             return "redirect:error_borrow";
         }
         User user = userService.findUserByUsername(principal.getName());
         Loan loan = loanService.loanBook(book, user);
-        redirectAttributes.addAttribute("loan", loan);
+        redirectAttributes.addFlashAttribute("loan", loan);
         return "redirect:success_borrow";
     }
 
@@ -69,8 +70,8 @@ public class SearchController {
     }
 
     @GetMapping("/error_borrow")
-    public String errorBorrow(@ModelAttribute Book book, Model model) {
-        model.addAttribute("book", book);
+    public String errorBorrow(@ModelAttribute Loan loan, Model model) {
+        model.addAttribute("loan", loan);
         return "error_borrow";
     }
 

@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <th:block th:replace="fragments/head_for_bootstrap :: head">.</th:block>
     <meta charset="UTF-8">
     <title>$Title$</title>
 </head>
 <body>
-    <p th:text="${loan.getId()}"></p>
-    <p th:text="${loan.getLoanDate()}"></p>
-    <p th:text="${loan.getReturnDeadLine()}"></p>
+    <div th:replace="fragments/header :: header"></div>
+    <div th:object="${loan}">
+        <p>Wypożyczyłeś książkę:</p>
+        <p th:text="'Tytuł: ' + (*{book.title}?:'')">Tytuł</p>
+        <p th:text="'Autor: ' + (*{book.author}?:'')">Autor</p>
+        <p th:text="'Wydawnictwo: ' + (*{book.publisher}?:'')">Wydawnictwo</p>
+        <p th:text="'Data wydania: ' + (*{book.publicationDate}?:'')">Data wydania</p>
+        <p th:text="'Isbn: ' + (*{book.isbn}?:'')">Isbn</p>
+        <br/>
+        <p th:text="'Data wypożyczenia: ' + (*{loanDate}?:'')">Data wypożyczenia</p>
+        <p th:text="'Termin zwrotu: ' + (*{returnDeadLine}?:'')">termin zwrotu</p>
+    </div>
 </body>
 </html>

@@ -14,8 +14,10 @@ public class Loan {
     private Date returnDate;
     private Date returnDeadLine;
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne
+    @JoinColumn(name = "book_id")
     private Book book;
 
     public Loan() {

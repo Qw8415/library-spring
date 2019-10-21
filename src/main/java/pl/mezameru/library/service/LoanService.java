@@ -38,4 +38,8 @@ public class LoanService {
         calendar.add(Calendar.DATE, LOAN_DAYS);
         return new Date(calendar.getTimeInMillis());
     }
+
+    public Loan findNotReturnedBook(Book book) {
+        return loanRepository.findNotReturnedBook(book);
+    }
 }
